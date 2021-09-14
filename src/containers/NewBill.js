@@ -16,9 +16,10 @@ export default class NewBill {
     new Logout({ document, localStorage, onNavigate })
   }
   handleChangeFile = e => {
-    const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
-    const filePath = e.target.value.split(/\\/g)
-    const fileName = filePath[filePath.length-1]
+    const file = this.document.querySelector(`input[data-testid="file"]`).files[0];
+    const filePath = e.target.value.split(/\\/g);
+    const fileName = filePath[filePath.length-1];
+  
     this.firestore
       .storage
       .ref(`justificatifs/${fileName}`)
@@ -26,7 +27,8 @@ export default class NewBill {
       .then(snapshot => snapshot.ref.getDownloadURL())
       .then(url => {
         this.fileUrl = url
-        this.fileName = fileName
+        this.fileName = fileName  
+        console.log("Merci d'avoir utilisé les bons formats")
       })
   }
   handleSubmit = e => {
