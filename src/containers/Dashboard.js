@@ -129,6 +129,10 @@ export default class {
     this.updateBill(newBill)
     this.onNavigate(ROUTES_PATH['Dashboard'])
   }
+// ********************************************************************
+// ***************Probleme [bug hunt] afficher les tickets*************
+// ********************************************************************
+
 
   handleShowTickets(e, bills, index) {
     if (this.counter === undefined || this.index !== index) this.counter = 0
@@ -144,8 +148,8 @@ export default class {
         .html("")
       this.counter ++
     }
-
-    bills.forEach(bill => {
+    
+    filteredBills(bills, getStatus(this.index)).forEach(bill => {
       $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
     })
 
