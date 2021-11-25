@@ -133,7 +133,6 @@ export default class {
 // ***************Probleme [bug hunt] afficher les tickets*************
 // ********************************************************************
 
-
   handleShowTickets(e, bills, index) {
     if (this.counter === undefined || this.index !== index) this.counter = 0
     if (this.index === undefined || this.index !== index) this.index = index
@@ -149,6 +148,9 @@ export default class {
       this.counter ++
     }
     
+    // bills.forEach(bill => {
+    //   $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+    // })
     filteredBills(bills, getStatus(this.index)).forEach(bill => {
       $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
     })

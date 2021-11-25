@@ -20,8 +20,14 @@ const row = (bill) => {
   }
 
 const rows = (data) => {
-  return (data && data.length) ? data.map(bill => row(bill)).join("") : ""
-}
+
+  if (data && data.length){
+    const antiChrono = (a, b) => ((a.date < b.date) ? 1 : -1)
+    const dataSorted = data.sort(antiChrono)
+    return dataSorted.map(bill => row(bill)).join("")
+  } else {
+   return ""
+}}
 
 export default ({ data: bills, loading, error }) => {
   
