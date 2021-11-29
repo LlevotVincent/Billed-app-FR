@@ -18,18 +18,28 @@ export default class NewBill {
   handleChangeFile = e => {
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0];
     const filePath = e.target.value.split(/\\/g);
-    const fileName = filePath[filePath.length-1];
-  
-    this.firestore
-      .storage
-      .ref(`justificatifs/${fileName}`)
-      .put(file)
-      .then(snapshot => snapshot.ref.getDownloadURL())
-      .then(url => {
-        this.fileUrl = url
-        this.fileName = fileName  
-        console.log("Merci d'avoir utilisé les bons formats")
-      })
+    const fileName = filePath[filePath.length - 1];
+    const validExtention = ["jpg", "jpeg", "png"];
+    const fileExtention = fileName.split(".").pop().toLowerCase();
+    const btn = this.document.getElementById("btn-send-bill")
+    if (validExtention.includes(fileExtention)) {
+      btn.disabled = false;
+      alert("merci d 'avoir utilisé les bons fichiers")
+      if (this.firestore) {
+        this.firestore
+          .storage
+          .ref(`justificatifs/${fileName}`)
+          .put(file)
+          .then(snapshot => snapshot.ref.getDownloadURL())
+          .then(url => {
+            this.fileUrl = url
+            this.fileName = fileName
+          })
+      }
+    } else {
+      btn.disabled = true;
+      alert("seul les fichier .jpg , .jpeg ou png sont acceptés")
+    }
   }
   handleSubmit = e => {
     e.preventDefault()
@@ -38,9 +48,9 @@ export default class NewBill {
     const bill = {
       email,
       type: e.target.querySelector(`select[data-testid="expense-type"]`).value,
-      name:  e.target.querySelector(`input[data-testid="expense-name"]`).value,
+      name: e.target.querySelector(`input[data-testid="expense-name"]`).value,
       amount: parseInt(e.target.querySelector(`input[data-testid="amount"]`).value),
-      date:  e.target.querySelector(`input[data-testid="datepicker"]`).value,
+      date: e.target.querySelector(`input[data-testid="datepicker"]`).value,
       vat: e.target.querySelector(`input[data-testid="vat"]`).value,
       pct: parseInt(e.target.querySelector(`input[data-testid="pct"]`).value) || 20,
       commentary: e.target.querySelector(`textarea[data-testid="commentary"]`).value,
@@ -56,12 +66,12 @@ export default class NewBill {
   createBill = (bill) => {
     if (this.firestore) {
       this.firestore
-      .bills()
-      .add(bill)
-      .then(() => {
-        this.onNavigate(ROUTES_PATH['Bills'])
-      })
-      .catch(error => error)
+        .bills()
+        .add(bill)
+        .then(() => {
+          this.onNavigate(ROUTES_PATH['Bills'])
+        })
+        .catch(error => error)
     }
   }
 }

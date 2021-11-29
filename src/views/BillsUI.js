@@ -1,8 +1,12 @@
+  
 import VerticalLayout from './VerticalLayout.js'
 import ErrorPage from "./ErrorPage.js"
 import LoadingPage from "./LoadingPage.js"
 
 import Actions from './Actions.js'
+import { formatDate } from '../app/format.js'
+
+
 
 const row = (bill) => {
   return (`
@@ -24,7 +28,7 @@ const rows = (data) => {
   if (data && data.length){
     const antiChrono = (a, b) => ((a.date < b.date) ? 1 : -1)
     const dataSorted = data.sort(antiChrono)
-    return dataSorted.map(bill => row(bill)).join("")
+    return dataSorted.map(bill => row(bill))
   } else {
    return ""
 }}
