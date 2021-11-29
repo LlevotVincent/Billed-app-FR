@@ -107,15 +107,15 @@ describe("Given I am connected as an employee", () => {
         })
         const filetest = screen.getByTestId("file")
         const btn = document.getElementById("btn-send-bill")
-        const handleChangeFile = jest.fn((e) => newBill.handleChangeFile(e))
+        const handleChangeFile = jest.fn(newBill.handleChangeFile)
         filetest.addEventListener("change", handleChangeFile)
         fireEvent.change(filetest, {
           target: {
-            files: [new File(["test"], 'test.jpeg', { type: 'image/png', })],
+            files: [new File(["test"], 'test.jpeg', { type: "image/jpeg" })],
           }
         })
         expect(handleChangeFile).toHaveBeenCalled()
-        expect(btn.disabled).not.toBeTruthy()
+        expect(btn.disabled).toBe(false)
       })
     })
   })
@@ -146,7 +146,7 @@ describe("Given I am connected as an employee", () => {
       filetest.addEventListener("change", handleChangeFile)
       fireEvent.change(filetest, {
         target: {
-          files: [new File(["test"], 'test.txt', { type: 'image/txt', })],
+          files: [new File(["test"], 'test.txt')],
         }
       })
       expect(handleChangeFile).toHaveBeenCalled()
