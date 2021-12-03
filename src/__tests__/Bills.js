@@ -101,6 +101,7 @@ describe("Given I am connected as an employee", () => {
       const handelClickIconEye = jest.fn(e => newBills.handleClickIconEye)
       iconEye[0].addEventListener("click", handelClickIconEye)
       fireEvent.click(iconEye[0])
+      console.log(iconEye[0])
       expect(handelClickIconEye).toHaveBeenCalled()
 
       const modale = document.getElementById('modaleFile')
