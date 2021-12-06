@@ -13,7 +13,7 @@ const row = (bill) => {
     <tr>
       <td>${bill.type}</td>
       <td>${bill.name}</td>
-      <td>${bill.date}</td>
+      <td>${formatDate(bill.date)}</td>
       <td>${bill.amount} €</td>
       <td>${bill.status}</td>
       <td>
@@ -23,16 +23,16 @@ const row = (bill) => {
     `)
   }
 
-const rows = (data) => {
-
-  if (data && data.length){
-    const antiChrono = (a, b) => ((a.date < b.date) ? 1 : -1)
-    const dataSorted = data.sort(antiChrono)
-    return dataSorted.map(bill => row(bill))
-  } else {
-   return ""
-}}
-
+  const rows = (data) => {
+    if (data && data.length) {
+      const antiChrono = (a, b) => ((a.date < b.date) ? 1 : -1)
+      const dataSorted = data.sort(antiChrono)
+      return dataSorted.map(bill => row(bill))
+    } else {
+      return ""
+    }
+  }
+  
 export default ({ data: bills, loading, error }) => {
   
   const modal = () => (`
